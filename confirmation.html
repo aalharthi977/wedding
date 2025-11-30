@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmation | تأكيد</title>
+    <!-- Google Fonts - Raleway for body, Playfair Display for headings -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap"
+            rel="stylesheet"
+    />
+    <!-- Noto Naskh Arabic for Arabic text (adjust if another Arabic font is preferred) -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        /* Basic Reset & Body Styles for confirmation page */
+        :root {
+            --primary-color: #a76e7b;
+            --secondary-color: #6a6a6a;
+            --light-bg: #fdfaf7;
+            --dark-text: #333;
+            --white: #ffffff;
+            --success-green: #28a745; /* A pleasant green for success */
+
+            --heading-font-en: 'Playfair Display', serif;
+            --body-font-en: 'Raleway', sans-serif;
+            --heading-font-ar: 'Noto Naskh Arabic', serif;
+            --body-font-ar: 'Noto Naskh Arabic', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font-en);
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        html[dir='rtl'] body {
+            font-family: var(--body-font-ar);
+        }
+        html[dir='rtl'] h1,
+        html[dir='rtl'] h2 {
+            font-family: var(--heading-font-ar);
+        }
+
+        .confirmation-card {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .checkmark-circle {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--success-green);
+            color: var(--white);
+            font-size: 50px;
+            line-height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-card h1 {
+            font-family: var(--heading-font-en);
+            color: var(--success-green);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        html[dir='rtl'] .confirmation-card h1 {
+            font-family: var(--heading-font-ar);
+        }
+
+        .confirmation-card p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        html[dir='rtl'] .back-button {
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .back-button:hover {
+            background-color: #8c5a66;
+        }
+
+        /* Language Toggle Button (copied from index.html) */
+        #languageToggleBtn {
+            position: fixed;
+            top: 30px;
+            right: 30px; /* LTR position */
+            z-index: 100;
+            background-color: var(--dark-text);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+        html[dir='rtl'] #languageToggleBtn {
+            right: auto; /* Reset right */
+            left: 30px; /* RTL position */
+        }
+
+        #languageToggleBtn:hover {
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 480px) {
+            .confirmation-card {
+                padding: 30px 20px;
+            }
+            .checkmark-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 40px;
+                line-height: 60px;
+            }
+            .confirmation-card h1 {
+                font-size: 2rem;
+            }
+            .confirmation-card p {
+                font-size: 1rem;
+            }
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            #languageToggleBtn {
+                top: 20px;
+                right: 20px;
+                padding: 8px 12px;
+            }
+            html[dir='rtl'] #languageToggleBtn {
+                left: 20px;
+                right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<button id="languageToggleBtn">العربية / English</button>
+
+<div class="confirmation-card">
+    <div class="checkmark-circle">&#10003;</div>
+    <h1 data-en="RSVP Confirmed!" data-ar="تم تأكيد حضورك!"></h1>
+    <p
+            data-en="Thank you for confirming your attendance. We can't wait to celebrate our special day with you!"
+            data-ar="شكراً لتأكيد حضورك. لا يسعنا الانتظار للاحتفال بيومنا الخاص معك!"
+    ></p>
+    <a href="index.html" class="back-button" data-en="Back to Invitation" data-ar="العودة إلى الدعوة"></a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const htmlElement = document.documentElement;
+        const languageToggleBtn = document.getElementById('languageToggleBtn');
+
+        // Function to update text content based on current language
+        function updateContent(lang) {
+            document.querySelectorAll('[data-en], [data-ar]').forEach((el) => {
+                if (lang === 'en' && el.dataset.en) {
+                    if (el.tagName === 'IMG') {
+                        el.alt = el.dataset.en;
+                    } else {
+                        el.textContent = el.dataset.en;
+                    }
+                } else if (lang === 'ar' && el.dataset.ar) {
+                    if (el.tagName === 'IMG') {
+                        el.alt = el.dataset.ar;
+                    } else {
+                        el.textContent = el.dataset.ar;
+                    }
+                }
+            });
+            // Update the title
+            const titleElement = document.querySelector('title');
+            const enTitle = titleElement.dataset.en || "Confirmation"; // Default for confirmation page
+            const arTitle = titleElement.dataset.ar || "تأكيد"; // Default for confirmation page
+
+            if (lang === 'en') {
+                titleElement.textContent = "Confirmation | تأكيد".split(' | ')[0]; // Use explicit English part
+            } else {
+                titleElement.textContent = "Confirmation | تأكيد".split(' | ')[1]; // Use explicit Arabic part
+            }
+        }
+
+        // Initialize language to Arabic (default on confirmation page too, for consistency)
+        let currentLang = 'ar';
+        // Check if there's a stored preference, otherwise default to 'ar'
+        const storedLang = localStorage.getItem('weddingAppLang');
+        if (storedLang) {
+            currentLang = storedLang;
+        }
+
+        htmlElement.setAttribute('lang', currentLang);
+        htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        languageToggleBtn.textContent =
+            currentLang === 'ar' ? 'English / العربية' : 'العربية / English'; // Set initial button text correctly
+        updateContent(currentLang);
+
+        languageToggleBtn.addEventListener('click', () => {
+            if (currentLang === 'en') {
+                currentLang = 'ar';
+            } else {
+                currentLang = 'en';
+            }
+            localStorage.setItem('weddingAppLang', currentLang); // Store preference
+            htmlElement.setAttribute('lang', currentLang);
+            htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            languageToggleBtn.textContent =
+                currentLang === 'ar' ? 'English / العربية' : 'العربية / English';
+            updateContent(currentLang);
+        });
+    });
+</script>
+</body>
+</html>

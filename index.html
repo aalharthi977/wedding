@@ -285,7 +285,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
-        /* Gallery Section */
+        /* Gallery Section - This was removed, but its CSS is still present */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -522,7 +522,7 @@
                             class="btn-map"
                             data-en="View on Map"
                             data-ar="عرض على الخريطة"
-                    ></a> <!-- Removed placeholder link text -->
+                    ></a>
                 </div>
             </div>
         </div>
@@ -551,8 +551,6 @@
         </div>
     </section>
 
-    <!-- The 'Photo Gallery' section was here and has been removed -->
-
     <section id="rsvp" class="section cta-section">
         <div class="container">
             <h2 data-en="RSVP" data-ar="تأكيد الحضور"></h2>
@@ -561,11 +559,10 @@
                     data-ar="لا يسعنا الانتظار للاحتفال معكم!"
             ></p>
             <a
-                    href="index.html"
-                    target="_blank"
-                    class="cta-button"
-                    data-en="Confirm Your Attendance"
-                    data-ar="أكد حضورك"
+                    href="confirmation.html"  <!-- CHANGED THIS LINE -->
+            class="cta-button"
+            data-en="Confirm Your Attendance"
+            data-ar="أكد حضورك"
             ></a>
         </div>
     </section>
@@ -594,8 +591,7 @@
                 if (lang === 'en' && el.dataset.en) {
                     if (el.tagName === 'IMG') {
                         el.alt = el.dataset.en;
-                    } else if (el.tagName === 'A' && el.dataset.en) {
-                        // For anchor tags, update textContent from data-en
+                    } else if (el.tagName === 'A') {
                         el.textContent = el.dataset.en;
                     } else {
                         el.textContent = el.dataset.en;
@@ -603,8 +599,7 @@
                 } else if (lang === 'ar' && el.dataset.ar) {
                     if (el.tagName === 'IMG') {
                         el.alt = el.dataset.ar;
-                    } else if (el.tagName === 'A' && el.dataset.ar) {
-                        // For anchor tags, update textContent from data-ar
+                    } else if (el.tagName === 'A') {
                         el.textContent = el.dataset.ar;
                     } else {
                         el.textContent = el.dataset.ar;
@@ -613,36 +608,44 @@
             });
             // Update the title
             const titleElement = document.querySelector('title');
-            const enTitle = titleElement.dataset.en || titleElement.textContent.split(' | ')[0];
-            const arTitle = titleElement.dataset.ar || titleElement.textContent.split(' | ')[1];
+            // Split the existing title from the HTML, which is now '[English Title] | [Arabic Title]'
+            const enTitlePart = titleElement.textContent.split(' | ')[0];
+            const arTitlePart = titleElement.textContent.split(' | ')[1];
 
             if (lang === 'en') {
-                titleElement.textContent = enTitle;
+                titleElement.textContent = enTitlePart;
             } else {
-                titleElement.textContent = arTitle;
+                titleElement.textContent = arTitlePart;
             }
         }
 
         // Initialize language to Arabic (default)
-        let currentLang = 'ar'; // Change to 'ar' for Arabic default
+        let currentLang = 'ar';
+        // Check if there's a stored preference, otherwise default to 'ar'
+        const storedLang = localStorage.getItem('weddingAppLang');
+        if (storedLang) {
+            currentLang = storedLang;
+        }
+
         htmlElement.setAttribute('lang', currentLang);
-        htmlElement.setAttribute('dir', 'rtl'); // Change to 'rtl' for Arabic default
-        languageToggleBtn.textContent = 'English / العربية'; // Set initial button text correctly for next toggle
+        htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        // Set the initial button text correctly based on the 'next' language
+        languageToggleBtn.textContent =
+            currentLang === 'ar' ? 'English / العربية' : 'العربية / English';
         updateContent(currentLang);
 
         languageToggleBtn.addEventListener('click', () => {
             if (currentLang === 'en') {
                 currentLang = 'ar';
-                htmlElement.setAttribute('lang', 'ar');
-                htmlElement.setAttribute('dir', 'rtl');
-                languageToggleBtn.textContent = 'English / العربية'; // Update button text for next click
             } else {
                 currentLang = 'en';
-                htmlElement.setAttribute('lang', 'en');
-                htmlElement.setAttribute('dir', 'ltr');
-                languageToggleBtn.textContent = 'العربية / English'; // Update button text for next click
             }
-            updateContent(currentLang); // Update all content
+            localStorage.setItem('weddingAppLang', currentLang); // Store preference
+            htmlElement.setAttribute('lang', currentLang);
+            htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            languageToggleBtn.textContent =
+                currentLang === 'ar' ? 'English / العربية' : 'العربية / English';
+            updateContent(currentLang);
         });
 
         // Scroll to Top Button Logic
@@ -666,14 +669,16 @@
             document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
         });
 
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links (if you add internal navigation)
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth',
-                });
+                // Only prevent default if it's an internal link
+                if (this.hash && document.querySelector(this.hash)) {
+                    e.preventDefault();
+                    document.querySelector(this.hash).scrollIntoView({
+                        behavior: 'smooth',
+                    });
+                }
             });
         });
     });
